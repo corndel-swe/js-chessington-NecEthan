@@ -7,6 +7,16 @@ export default class Rook {
   }
 
   getAvailableMoves(board) {
+    let location = board.findPiece(this)
+
+    let moves = []
+
+    // if (this.player === Player.WHITE) {
+    //   for (let i=1; i <)
+
+    //   moves.push(new Square(location.row ))
+    // }
+     
     return []
   }
 
