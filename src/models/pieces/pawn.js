@@ -8,10 +8,8 @@ export default class Pawn {
   }
 
   getAvailableMoves(board) {
-    // get the square currently occupied by the pawn
     let location = board.findPiece(this)
 
-    // the list of valid moves
     let moves = []
 
     if (this.player === Player.WHITE) {

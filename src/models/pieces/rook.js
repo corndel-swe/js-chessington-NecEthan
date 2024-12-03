@@ -11,13 +11,15 @@ export default class Rook {
 
     let moves = []
 
-    // if (this.player === Player.WHITE) {
-    //   for (let i=1; i <)
-
-    //   moves.push(new Square(location.row ))
-    // }
+    if (this.player === Player.WHITE) {
+      if (location.row === 0) {
+        moves.push(new Square(location.row + 1, location.col))
+        moves.push(new Square(location.row, location.col + 1))
+      }
      
-    return []
+    }
+
+    return moves
   }
 
   moveTo(board, newSquare) {
