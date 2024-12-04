@@ -26,9 +26,8 @@ export default class Rook extends Piece{
 
         if (capturable) {
           if (
-            capturable.player !== this.player &&
-            !(capturable instanceof King)
-          ) {
+            capturable.player !== this.player)
+           {
             moves.push(candidate)
           }
           break

@@ -9,28 +9,38 @@ export default class Pawn extends Piece{
   }
 
   getAvailableMoves(board) {
-    let location = board.findPiece(this)
+    const loc = board.findPiece(this)
+    const moves = []
 
-    let moves = []
+    const dirs = []
 
-    if (this.player === Player.WHITE) {
-
-      if (location.row === 1) {
-        moves.push(new Square(location.row + 2, location.col))
-        moves.push(new Square(location.row + 1, location.col))
-      } else {
-        moves.push(new Square(location.row + 1, location.col))
-      }
-
-    } 
+    if (loc.row === 1) {
+      this.dirs = [
+        { dr: 1, dc: 0 },
+        { dr: 2, dc: 0 },
+      ]
+    } else {
+      this.dirs = [
+        { dr: 1, dc: 0 },
+      ]
+    }
     
-    if (this.player === Player.BLACK) {
-      if (location.row === 6) {
-        moves.push(new Square(location.row - 1, location.col))
-        moves.push(new Square(location.row - 2, location.col))
-      } else {
-        moves.push(new Square(location.row - 1, location.col))
-      } 
+
+    for (let { dr, dc } of dirs) {
+      
+      let candidate = new Square(loc.row + dr, loc.col + dc)
+      if (board.contains(candidate)) {
+        // Check if there is a piece in the way
+        const capturable = board.getPiece(candidate)
+
+        if (capturable) {
+          if (
+            capturable.player !== this.player)
+           {
+            moves.push(candidate)
+          }
+        }
+      }
     }
 
     return moves
