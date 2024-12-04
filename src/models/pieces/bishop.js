@@ -1,37 +1,48 @@
 import Square from '../square.js'
 import Piece from './piece.js'
-import Player from '../player.js'
+import King from './king.js'
 
-export default class Bishop {
+class Bishop extends Piece {
   constructor(player) {
-    this.player = player
+    super(player)
   }
 
   getAvailableMoves(board) {
-    console.log(board)
-    let row1 = board[0]
-    console.log(row1.length)
-    console.log('-----------------------------')
-  
+    const loc = board.findPiece(this)
+    console.log(loc)
+    const moves = []
 
-    // the list of valid moves
-    let moves = []
+    const dirs = [
+      { dr: 1, dc: 1 },
+      { dr: 1, dc: -1 },
+      { dr: -1, dc: 1 },
+      { dr: -1, dc: -1 }
+    ]
 
-    if (this.player === Player.WHITE) {
-      if (location.row > 0) {
-        moves.push(new Square(location.row - 1, location.col + 1));
-        moves.push(new Square(location.row - 1, location.col - 1));
+    for (let { dr, dc } of dirs) {
+      let candidate = new Square(loc.row + dr, loc.col + dc)
+      while (board.contains(candidate)) {
+        // Check if there is a piece in the way
+        const capturable = board.getPiece(candidate)
+
+        if (capturable) {
+          if (
+            capturable.player !== this.player &&
+            !(capturable instanceof King)
+          ) {
+            moves.push(candidate)
+          }
+          break
+        }
+
+        moves.push(candidate)
+
+        candidate = new Square(candidate.row + dr, candidate.col + dc)
       }
-   
-      moves.push(new Square(location.row + 1, location.col + 1));
-     
-    } 
+    }
 
     return moves
   }
-
-  moveTo(board, newSquare) {
-    const currentSquare = board.findPiece(this)
-    board.movePiece(currentSquare, newSquare)
-  }
 }
+
+export default Bishop

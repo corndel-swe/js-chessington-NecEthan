@@ -1,29 +1,46 @@
 import Square from '../square.js'
 import Piece from './piece.js'
 
-export default class Rook {
+export default class Rook extends Piece{
   constructor(player) {
-    this.player = player
+    super(player);
+
   }
 
   getAvailableMoves(board) {
-    let location = board.findPiece(this)
+    const loc = board.findPiece(this)
+    const moves = []
 
-    let moves = []
+    const dirs = [
+      { dr: 1, dc: 0 },
+      { dr: -1, dc: 0 },
+      { dr: 0, dc: 1 },
+      { dr: 0, dc: -1 },
+    ]
 
-    if (this.player === Player.WHITE) {
-      if (location.row === 0) {
-        moves.push(new Square(location.row + 1, location.col))
-        moves.push(new Square(location.row, location.col + 1))
+    for (let { dr, dc } of dirs) {
+      let candidate = new Square(loc.row + dr, loc.col + dc)
+      while (board.contains(candidate)) {
+        // Check if there is a piece in the way
+        const capturable = board.getPiece(candidate)
+
+        if (capturable) {
+          if (
+            capturable.player !== this.player &&
+            !(capturable instanceof King)
+          ) {
+            moves.push(candidate)
+          }
+          break
+        }
+
+        moves.push(candidate)
+
+        candidate = new Square(candidate.row + dr, candidate.col + dc)
       }
-     
     }
 
     return moves
   }
 
-  moveTo(board, newSquare) {
-    const currentSquare = board.findPiece(this)
-    board.movePiece(currentSquare, newSquare)
-  }
 }

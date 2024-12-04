@@ -2,52 +2,47 @@ import Square from '../square.js'
 import Piece from './piece.js'
 import Player from '../player.js'
 
-export default class King {
+export default class King extends Piece{
   constructor(player) {
-    this.player = player
+    super(player);
   }
 
   getAvailableMoves(board) {
-    let location = board.findPiece(this)
+    const loc = board.findPiece(this)
+    const moves = []
 
-    // the list of valid moves
-    let moves = []
+    const dirs = [
+      { dr: 1, dc: 1 },
+      { dr: 1, dc: 0 },
+      { dr: 1, dc: -1 },
+      { dr: -1, dc: 1 },
+      { dr: -1, dc: 0 },
+      { dr: -1, dc: -1 },
+    ]
 
-    if (this.player === Player.WHITE) {
-   
-      moves.push(new Square(location.row + 1, location.col))
-      moves.push(new Square(location.row, location.col + 1))
-      moves.push(new Square(location.row, location.col - 1))
-      moves.push(new Square(location.row + 1, location.col - 1))
-      moves.push(new Square(location.row + 1, location.col + 1))
+    for (let { dr, dc } of dirs) {
+      let candidate = new Square(loc.row + dr, loc.col + dc)
+      while (board.contains(candidate)) {
+        // Check if there is a piece in the way
+        const capturable = board.getPiece(candidate)
 
-      if (location.row > 0) {
-        moves.push(new Square(location.row - 1, location.col - 1))
-        moves.push(new Square(location.row - 1, location.col + 1))
-        moves.push(new Square(location.row - 1, location.col))
+        if (capturable) {
+          if (
+            capturable.player !== this.player &&
+            !(capturable instanceof King)
+          ) {
+            moves.push(candidate)
+          }
+          break
+        }
+
+        moves.push(candidate)
+
+        candidate = new Square(candidate.row + dr, candidate.col + dc)
       }
-      
-    } 
+    }
 
-    if (this.player === Player.BLACK) {
-      moves.push(new Square(location.row - 1, location.col))
-      moves.push(new Square(location.row, location.col + 1))
-      moves.push(new Square(location.row, location.col - 1))
-      moves.push(new Square(location.row - 1, location.col + 1))
-      moves.push(new Square(location.row - 1, location.col - 1))
-
-      if (location.row < 7) {
-        moves.push(new Square(location.row + 1, location.col - 1))
-        moves.push(new Square(location.row + 1, location.col + 1))
-        moves.push(new Square(location.row + 1, location.col))
-      }
-    } 
-    
     return moves
   }
 
-  moveTo(board, newSquare) {
-    const currentSquare = board.findPiece(this)
-    board.movePiece(currentSquare, newSquare)
-  }
 }
