@@ -5,4 +5,8 @@ export class Maths {
     static max(a, b) {
         return a > b ? a : b;
     }
+
+    static round(num) {
+        return Math.round(Math.abs(num));
+    }
 }
