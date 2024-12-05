@@ -9,7 +9,6 @@ class Bishop extends Piece {
 
   getAvailableMoves(board) {
     const loc = board.findPiece(this)
-    console.log(loc)
     const moves = []
 
     const dirs = [
