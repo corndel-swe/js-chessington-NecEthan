@@ -47,7 +47,7 @@ describe('Rook', () => {
     assert.equal(moves.length, 14, '`moves` does not have length 14')
   })
 
-  xit('cannot move through friendly pieces', () => {
+  it('cannot move through friendly pieces', () => {
     const rook = new Rook(Player.WHITE)
     const friendlyPiece = new Pawn(Player.WHITE)
     board.setPiece(new Square(4, 4), rook)
@@ -56,12 +56,12 @@ describe('Rook', () => {
     const moves = rook.getAvailableMoves(board)
 
     assert(
-      !moves.some(square => equare.equals(new Square(4, 7))),
+      !moves.some(square => square.equals(new Square(4, 7))),
       '`moves` contains the square (4, 7)'
     )
   })
 
-  xit('cannot move through opposing pieces', () => {
+  it('cannot move through opposing pieces', () => {
     const rook = new Rook(Player.WHITE)
     const opposingPiece = new Pawn(Player.BLACK)
     board.setPiece(new Square(4, 4), rook)
@@ -75,7 +75,7 @@ describe('Rook', () => {
     )
   })
 
-  xit('can take opposing pieces', () => {
+  it('can take opposing pieces', () => {
     const rook = new Rook(Player.WHITE)
     const opposingPiece = new Pawn(Player.BLACK)
     board.setPiece(new Square(4, 4), rook)
@@ -103,7 +103,7 @@ describe('Rook', () => {
     )
   })
 
-  xit('cannot take friendly pieces', () => {
+  it('cannot take friendly pieces', () => {
     const rook = new Rook(Player.WHITE)
     const friendlyPiece = new Pawn(Player.WHITE)
     board.setPiece(new Square(4, 4), rook)
