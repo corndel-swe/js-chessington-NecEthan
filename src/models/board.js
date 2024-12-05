@@ -16,6 +16,18 @@ export default class Board {
     return board
   }
 
+  contains(square) {
+    if (square.row < 0 || square.row >= this.board.length) {
+      return false
+    }
+
+    if (square.col < 0 || square.col >= this.board[0].length) {
+      return false
+    }
+
+    return true
+  }
+
   setPiece(square, piece) {
     this.board[square.row][square.col] = piece
   }

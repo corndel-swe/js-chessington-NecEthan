@@ -1,32 +1,67 @@
+import Player from '../player.js';
 import Square from '../square.js'
-import Player from '../player.js'
 import Piece from './piece.js'
 
-export default class Pawn {
+export default class Pawn extends Piece {
   constructor(player) {
-    this.player = player
+    super(player);
   }
 
   getAvailableMoves(board) {
-    // get the square currently occupied by the pawn
-    let location = board.findPiece(this)
-
-    // the list of valid moves
-    let moves = []
+    const loc = board.findPiece(this);
+    const moves = [];
+    let dirs = [];
 
     if (this.player === Player.WHITE) {
-      // white pawns can move "up" by one
-      moves.push(new Square(location.row + 1, location.col))
-    } else {
-      // black pawns can move "down" by one
-      moves.push(new Square(location.row - 1, location.col))
+      if (loc.row === 1) { 
+        dirs.push(
+          { dr: 1, dc: 0 }, 
+          { dr: 2, dc: 0 }, 
+        )
+      } else {
+        dirs.push({ dr: 1, dc: 0 })  
+      }
+    }
+    if (this.player === Player.BLACK) {
+      if (loc.row === 6) { 
+        dirs.push(
+          { dr: -1, dc: 0 },  
+          { dr: -2, dc: 0 },
+        )
+      } else {
+        dirs.push({ dr: -1, dc: 0 })  
+      }
     }
 
-    return moves
-  }
+    for (let dir of dirs) {
+      let candidate = new Square(loc.row + dir.dr, loc.col); 
+      let capturableRightSquare = new Square(candidate.row, candidate.col + 1);
+      let capturableLeftSquare = new Square(candidate.row, candidate.col - 1);
 
-  moveTo(board, newSquare) {
-    const currentSquare = board.findPiece(this)
-    board.movePiece(currentSquare, newSquare)
+      if (board.contains(candidate)) {
+        const capturable = board.getPiece(candidate);
+        const capturableLeft = board.getPiece(capturableLeftSquare);
+        const capturableRight = board.getPiece(capturableRightSquare);
+
+
+        if (capturableRight && capturableRight.player !== this.player) {
+          moves.push(capturableRightSquare);
+        }
+
+        if (capturableLeft && capturableLeft.player !== this.player) {
+          moves.push(capturableLeftSquare);
+        }
+
+        if (capturable) {
+          break;
+        }
+
+        if (!capturable) {
+          moves.push(candidate);
+        }
+      }
+    }
+
+    return moves;
   }
 }

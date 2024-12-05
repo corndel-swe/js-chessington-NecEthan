@@ -4,6 +4,7 @@ import Board from '../../../src/models/board.js'
 import Player from '../../../src/models/player.js'
 import Square from '../../../src/models/square.js'
 import King from '../../../src/models/pieces/king.js'
+import Rook from '../../../src/models/pieces/rook.js'
 
 describe('Pawn', () => {
   let board
@@ -32,7 +33,7 @@ describe('Pawn', () => {
       assert(moves.some(square => square.equals(new Square(3, 7))))
     })
 
-    xit('cannot move at the top of the board', () => {
+    it('cannot move at the top of the board', () => {
       const pawn = new Pawn(Player.WHITE)
       board.setPiece(new Square(7, 3), pawn)
 
@@ -41,7 +42,7 @@ describe('Pawn', () => {
       assert.equal(moves.length, 0)
     })
 
-    xit('cannot move if there is a piece in front', () => {
+    it('cannot move if there is a piece in front', () => {
       const pawn = new Pawn(Player.WHITE)
       const blockingPiece = new Rook(Player.BLACK)
       board.setPiece(new Square(5, 3), pawn)
@@ -52,7 +53,7 @@ describe('Pawn', () => {
       assert.equal(moves.length, 0)
     })
 
-    xit('cannot move two squares if there is a piece two sqaures in front', () => {
+    it('cannot move two squares if there is a piece two sqaures in front', () => {
       const pawn = new Pawn(Player.WHITE)
       const blockingPiece = new Rook(Player.BLACK)
       board.setPiece(new Square(1, 3), pawn)
@@ -63,7 +64,7 @@ describe('Pawn', () => {
       assert(!moves.some(square => square.equals(new Square(3, 3))))
     })
 
-    xit('can move diagonally if there is a piece to take', () => {
+    it('can move diagonally if there is a piece to take', () => {
       const pawn = new Pawn(Player.WHITE)
       const opposingPiece = new Rook(Player.BLACK)
       board.setPiece(new Square(4, 4), pawn)
@@ -74,7 +75,7 @@ describe('Pawn', () => {
       assert(moves.some(square => square.equals(new Square(5, 3))))
     })
 
-    xit('cannot move diagonally if there is no piece to take', () => {
+    it('cannot move diagonally if there is no piece to take', () => {
       const pawn = new Pawn(Player.WHITE)
       board.setPiece(new Square(4, 4), pawn)
 
@@ -83,7 +84,7 @@ describe('Pawn', () => {
       assert(!moves.some(square => square.equals(new Square(5, 3))))
     })
 
-    xit('cannot take a friendly piece', () => {
+    it('cannot take a friendly piece', () => {
       const pawn = new Pawn(Player.WHITE)
       const friendlyPiece = new Rook(Player.WHITE)
       board.setPiece(new Square(4, 4), pawn)
@@ -127,7 +128,7 @@ describe('Pawn', () => {
       assert(moves.some(square => square.equals(new Square(5, 7))))
     })
 
-    xit('cannot move at the bottom of the board', () => {
+    it('cannot move at the bottom of the board', () => {
       const pawn = new Pawn(Player.BLACK)
       board.setPiece(new Square(0, 3), pawn)
 
@@ -136,18 +137,18 @@ describe('Pawn', () => {
       assert.equal(moves.length, 0)
     })
 
-    xit('cannot move if there is a piece in front', () => {
+    it('cannot move if there is a piece in front', () => {
       const pawn = new Pawn(Player.BLACK)
       const blockingPiece = new Rook(Player.WHITE)
       board.setPiece(new Square(6, 3), pawn)
       board.setPiece(new Square(5, 3), blockingPiece)
 
       const moves = pawn.getAvailableMoves(board)
-
+      console.log(moves)
       assert.equal(moves.length, 0)
     })
 
-    xit('cannot move two squares if there is a piece two sqaures in front', () => {
+    it('cannot move two squares if there is a piece two sqaures in front', () => {
       const pawn = new Pawn(Player.BLACK)
       const blockingPiece = new Rook(Player.WHITE)
       board.setPiece(new Square(6, 3), pawn)
@@ -158,7 +159,7 @@ describe('Pawn', () => {
       assert(!moves.some(square => square.equals(new Square(4, 3))))
     })
 
-    xit('can move diagonally if there is a piece to take', () => {
+    it('can move diagonally if there is a piece to take', () => {
       const pawn = new Pawn(Player.BLACK)
       const opposingPiece = new Rook(Player.WHITE)
       board.setPiece(new Square(4, 4), pawn)
@@ -169,7 +170,7 @@ describe('Pawn', () => {
       assert(moves.some(square => square.equals(new Square(3, 3))))
     })
 
-    xit('cannot move diagonally if there is no piece to take', () => {
+    it('cannot move diagonally if there is no piece to take', () => {
       const pawn = new Pawn(Player.BLACK)
       board.setPiece(new Square(4, 4), pawn)
 
@@ -178,7 +179,7 @@ describe('Pawn', () => {
       assert(!moves.some(square => square.equals(new Square(3, 3))))
     })
 
-    xit('cannot take a friendly piece', () => {
+    it('cannot take a friendly piece', () => {
       const pawn = new Pawn(Player.BLACK)
       const friendlyPiece = new Rook(Player.BLACK)
       board.setPiece(new Square(4, 4), pawn)
