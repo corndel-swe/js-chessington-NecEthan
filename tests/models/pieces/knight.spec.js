@@ -41,7 +41,7 @@ describe('Knight', () => {
     assert.equal(moves.length, 8, '`moves` does not have length 8')
   })
 
-  xit('can jump over other pieces', () => {
+  it('can jump over other pieces', () => {
     const knight = new Knight(Player.WHITE)
     const firstPawn = new Pawn(Player.WHITE)
     const secondPawn = new Pawn(Player.BLACK)
@@ -57,7 +57,7 @@ describe('Knight', () => {
     )
   })
 
-  xit('cannot leave the board', () => {
+  it('cannot leave the board', () => {
     const knight = new Knight(Player.WHITE)
     board.setPiece(new Square(0, 0), knight)
 
@@ -68,7 +68,7 @@ describe('Knight', () => {
     assert.deepEqual(new Set(moves), new Set(expectedMoves))
   })
 
-  xit('can take opposing pieces', () => {
+  it('can take opposing pieces', () => {
     const knight = new Knight(Player.WHITE)
     const opposingPiece = new Pawn(Player.BLACK)
     board.setPiece(new Square(4, 4), knight)
@@ -96,7 +96,7 @@ describe('Knight', () => {
     )
   })
 
-  xit('cannot take friendly pieces', () => {
+  it('cannot take friendly pieces', () => {
     const knight = new Knight(Player.WHITE)
     const friendlyPiece = new Pawn(Player.WHITE)
     board.setPiece(new Square(4, 4), knight)

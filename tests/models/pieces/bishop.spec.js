@@ -44,7 +44,7 @@ describe('Bishop', () => {
     assert.equal(moves.length, 11, '`moves` does not have length 11')
   })
 
-  xit('cannot move through friendly pieces', () => {
+  it('cannot move through friendly pieces', () => {
     const bishop = new Bishop(Player.WHITE)
     const friendlyPiece = new Pawn(Player.WHITE)
     board.setPiece(new Square(4, 4), bishop)
@@ -58,7 +58,7 @@ describe('Bishop', () => {
     )
   })
 
-  xit('cannot move through opposing pieces', () => {
+  it('cannot move through opposing pieces', () => {
     const bishop = new Bishop(Player.WHITE)
     const opposingPiece = new Pawn(Player.BLACK)
     board.setPiece(new Square(4, 4), bishop)
@@ -72,7 +72,7 @@ describe('Bishop', () => {
     )
   })
 
-  xit('can take opposing pieces', () => {
+  it('can take opposing pieces', () => {
     const bishop = new Bishop(Player.WHITE)
     const opposingPiece = new Pawn(Player.BLACK)
     board.setPiece(new Square(4, 4), bishop)
@@ -100,7 +100,7 @@ describe('Bishop', () => {
     )
   })
 
-  xit('cannot take friendly pieces', () => {
+  it('cannot take friendly pieces', () => {
     const bishop = new Bishop(Player.WHITE)
     const friendlyPiece = new Pawn(Player.WHITE)
     board.setPiece(new Square(4, 4), bishop)

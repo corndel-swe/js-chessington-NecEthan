@@ -34,8 +34,7 @@ export default class Pawn extends Piece {
     }
 
     for (let dir of dirs) {
-
-      let candidate = new Square(loc.row + dir.dr, loc.col + dir.dc); 
+      let candidate = new Square(loc.row + dir.dr, loc.col); 
       let capturableRightSquare = new Square(candidate.row, candidate.col + 1);
       let capturableLeftSquare = new Square(candidate.row, candidate.col - 1);
 
@@ -51,6 +50,10 @@ export default class Pawn extends Piece {
 
         if (capturableLeft && capturableLeft.player !== this.player) {
           moves.push(capturableLeftSquare);
+        }
+
+        if (capturable) {
+          break;
         }
 
         if (!capturable) {
